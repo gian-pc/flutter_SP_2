@@ -1,10 +1,7 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo3_sp_2/pages/home_page.dart';
 
-void main(){
+void main() {
   runApp(MyApp());
 }
 
