@@ -1,7 +1,31 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  String nameValue = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getSharedPreferences();
+  }
+
+  getSharedPreferences() async {
+    SharedPreferences luisito = await SharedPreferences.getInstance();
+    String name = luisito.getString("name") ?? "No name";
+    print(name);
+  }
+
+  saveSharedPreferences() async {
+    SharedPreferences ramon = await SharedPreferences.getInstance();
+    ramon.setString("name", nameValue);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +50,10 @@ class SettingsPage extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
               decoration: InputDecoration(hintText: "Name"),
+              onChanged: (String value) {
+                nameValue = value;
+                saveSharedPreferences();
+              },
             ),
           ),
           SizedBox(height: 20.0),
