@@ -8,7 +8,11 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String nameValue = "";
+  String addressValue="";
+  bool darkModeValue = false;
+  int gender = 1;
   TextEditingController _nameController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
 
   @override
   void initState() {
@@ -18,13 +22,24 @@ class _SettingsPageState extends State<SettingsPage> {
 
   getSharedPreferences() async {
     SharedPreferences luisito = await SharedPreferences.getInstance();
-    _nameController.text = luisito.getString("name") ?? "No name";
 
+    nameValue = luisito.getString("name")?? "No name";
+    addressValue = luisito.getString("address")?? "No address";
+    darkModeValue = luisito.getBool("darkMode")?? false;
+
+    _nameController.text = luisito.getString("name") ?? "No name";
+    _addressController.text = luisito.getString("address") ?? "No address";
+
+    setState(() {
+
+    });
   }
 
   saveSharedPreferences() async {
     SharedPreferences ramon = await SharedPreferences.getInstance();
     ramon.setString("name", nameValue);
+    ramon.setString("address", addressValue);
+    ramon.setBool("darkMode", darkModeValue);
   }
 
   @override
@@ -32,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings Page"),
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: darkModeValue? Color(0xff1C1C1C):Colors.deepPurpleAccent,
       ),
       body: ListView(
         children: [
@@ -62,13 +77,26 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              controller: _addressController,
               decoration: InputDecoration(hintText: "Address"),
+              onChanged: (String value) {
+                addressValue = value;
+                saveSharedPreferences();
+              },
             ),
           ),
           SizedBox(height: 20.0),
           SwitchListTile(
-            value: true,
-            onChanged: (bool value) {},
+            value: darkModeValue,
+            onChanged: (bool value) {
+
+              darkModeValue=value;
+              saveSharedPreferences();
+              setState(() {
+
+              });
+              print(darkModeValue);
+            },
             title: Text("Dark Mode"),
             subtitle: Text("Active dark mode!"),
           ),
@@ -85,15 +113,26 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           RadioListTile(
             value: 1,
-            groupValue: 1,
+            groupValue: gender,
             title: Text("Male"),
-            onChanged: (value) {},
+            onChanged: (int? value) {
+              gender = value!;
+              setState(() {
+                print(gender);
+
+              });
+            },
           ),
           RadioListTile(
-            value: 1,
-            groupValue: 1,
+            value: 2,
+            groupValue: gender,
             title: Text("Female"),
-            onChanged: (value) {},
+            onChanged: (int? value) {
+              gender = value!;
+              setState(() {
+                print(gender);
+              });
+            },
           ),
         ],
       ),
