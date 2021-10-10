@@ -8,6 +8,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String nameValue = "";
+  TextEditingController _nameController = TextEditingController();
 
   @override
   void initState() {
@@ -17,8 +18,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   getSharedPreferences() async {
     SharedPreferences luisito = await SharedPreferences.getInstance();
-    String name = luisito.getString("name") ?? "No name";
-    print(name);
+    _nameController.text = luisito.getString("name") ?? "No name";
+
   }
 
   saveSharedPreferences() async {
@@ -49,6 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              controller: _nameController,
               decoration: InputDecoration(hintText: "Name"),
               onChanged: (String value) {
                 nameValue = value;
