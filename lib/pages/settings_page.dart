@@ -26,7 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
     nameValue = luisito.getString("name")?? "No name";
     addressValue = luisito.getString("address")?? "No address";
     darkModeValue = luisito.getBool("darkMode")?? false;
-
+    gender = luisito.getInt("gender") ?? 1;
     _nameController.text = luisito.getString("name") ?? "No name";
     _addressController.text = luisito.getString("address") ?? "No address";
 
@@ -40,6 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
     ramon.setString("name", nameValue);
     ramon.setString("address", addressValue);
     ramon.setBool("darkMode", darkModeValue);
+    ramon.setInt("gender", gender);
   }
 
   @override
@@ -118,9 +119,10 @@ class _SettingsPageState extends State<SettingsPage> {
             onChanged: (int? value) {
               gender = value!;
               setState(() {
-                print(gender);
+
 
               });
+              saveSharedPreferences();
             },
           ),
           RadioListTile(
@@ -130,8 +132,9 @@ class _SettingsPageState extends State<SettingsPage> {
             onChanged: (int? value) {
               gender = value!;
               setState(() {
-                print(gender);
+
               });
+              saveSharedPreferences();
             },
           ),
         ],
