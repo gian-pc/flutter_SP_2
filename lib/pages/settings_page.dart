@@ -8,7 +8,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String nameValue = "";
-  String addressValue="";
+  String addressValue = "";
   bool darkModeValue = false;
   int gender = 1;
   TextEditingController _nameController = TextEditingController();
@@ -23,16 +23,14 @@ class _SettingsPageState extends State<SettingsPage> {
   getSharedPreferences() async {
     SharedPreferences luisito = await SharedPreferences.getInstance();
 
-    nameValue = luisito.getString("name")?? "No name";
-    addressValue = luisito.getString("address")?? "No address";
-    darkModeValue = luisito.getBool("darkMode")?? false;
+    nameValue = luisito.getString("name") ?? "No name";
+    addressValue = luisito.getString("address") ?? "No address";
+    darkModeValue = luisito.getBool("darkMode") ?? false;
     gender = luisito.getInt("gender") ?? 1;
     _nameController.text = luisito.getString("name") ?? "No name";
     _addressController.text = luisito.getString("address") ?? "No address";
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   saveSharedPreferences() async {
@@ -48,7 +46,8 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings Page"),
-        backgroundColor: darkModeValue? Color(0xff1C1C1C):Colors.deepPurpleAccent,
+        backgroundColor:
+            darkModeValue ? Color(0xff1C1C1C) : Colors.deepPurpleAccent,
       ),
       body: ListView(
         children: [
@@ -90,12 +89,9 @@ class _SettingsPageState extends State<SettingsPage> {
           SwitchListTile(
             value: darkModeValue,
             onChanged: (bool value) {
-
-              darkModeValue=value;
+              darkModeValue = value;
               saveSharedPreferences();
-              setState(() {
-
-              });
+              setState(() {});
               print(darkModeValue);
             },
             title: Text("Dark Mode"),
@@ -118,10 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text("Male"),
             onChanged: (int? value) {
               gender = value!;
-              setState(() {
-
-
-              });
+              setState(() {});
               saveSharedPreferences();
             },
           ),
@@ -131,9 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text("Female"),
             onChanged: (int? value) {
               gender = value!;
-              setState(() {
-
-              });
+              setState(() {});
               saveSharedPreferences();
             },
           ),
