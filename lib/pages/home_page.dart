@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo3_sp_2/utils/shared_preferences_global.dart';
 import 'package:flutter_codigo3_sp_2/widgets/my_drawer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,19 +13,24 @@ class _HomePageState extends State<HomePage> {
   String _address = "";
   bool _darkMode = false;
   int _gender = 1;
+  final SharedGlobal shared = new SharedGlobal();
 
   @override
   initState() {
     super.initState();
     getData();
   }
-
   getData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _name = prefs.getString("name") ?? "-";
-    _address = prefs.getString("address") ?? "-";
-    _darkMode = prefs.getBool("darkMode") ?? false;
-    _gender = prefs.getInt("gender") ?? 1;
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // _name = prefs.getString("name") ?? "-";
+    // _address = prefs.getString("address") ?? "-";
+    // _darkMode = prefs.getBool("darkMode") ?? false;
+    // _gender = prefs.getInt("gender") ?? 1;
+
+    _name = shared.name;
+    _address = shared.address;
+    _darkMode = shared.darkMode;
+    _gender= shared.gender;
 
     setState(() {});
   }

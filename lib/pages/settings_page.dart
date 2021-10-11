@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_codigo3_sp_2/utils/shared_preferences_global.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -14,31 +14,45 @@ class _SettingsPageState extends State<SettingsPage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
 
+  final SharedGlobal mandarina = new SharedGlobal();
+
   @override
   void initState() {
     super.initState();
     getSharedPreferences();
   }
 
-  getSharedPreferences() async {
-    SharedPreferences luisito = await SharedPreferences.getInstance();
+  getSharedPreferences() {
+    // SharedPreferences luisito = await SharedPreferences.getInstance();
+    // nameValue = luisito.getString("name") ?? "No name";
+    // addressValue = luisito.getString("address") ?? "No address";
+    // darkModeValue = luisito.getBool("darkMode") ?? false;
+    // gender = luisito.getInt("gender") ?? 1;
+    // _nameController.text = luisito.getString("name") ?? "No name";
+    // _addressController.text = luisito.getString("address") ?? "No address";
 
-    nameValue = luisito.getString("name") ?? "No name";
-    addressValue = luisito.getString("address") ?? "No address";
-    darkModeValue = luisito.getBool("darkMode") ?? false;
-    gender = luisito.getInt("gender") ?? 1;
-    _nameController.text = luisito.getString("name") ?? "No name";
-    _addressController.text = luisito.getString("address") ?? "No address";
+    nameValue = mandarina.name;
+    addressValue = mandarina.address;
+    darkModeValue = mandarina.darkMode;
+    gender = mandarina.gender;
+
+    _nameController.text = mandarina.name;
+    _addressController.text = mandarina.address;
 
     setState(() {});
   }
 
-  saveSharedPreferences() async {
-    SharedPreferences ramon = await SharedPreferences.getInstance();
-    ramon.setString("name", nameValue);
-    ramon.setString("address", addressValue);
-    ramon.setBool("darkMode", darkModeValue);
-    ramon.setInt("gender", gender);
+  saveSharedPreferences() {
+    // SharedPreferences ramon = await SharedPreferences.getInstance();
+    // ramon.setString("name", nameValue);
+    // ramon.setString("address", addressValue);
+    // ramon.setBool("darkMode", darkModeValue);
+    // ramon.setInt("gender", gender);
+
+    mandarina.name = nameValue;
+    mandarina.address = addressValue;
+    mandarina.darkMode = darkModeValue;
+    mandarina.gender = gender;
   }
 
   @override
